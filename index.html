@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dataseed — Data Driven</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#050e06;
+  --bg2:#071209;
+  --card:rgba(0,255,65,0.035);
+  --card-b:rgba(0,255,65,0.12);
+  --card-h:rgba(0,255,65,0.07);
+  --g:#00ff41;
+  --g2:#00cc33;
+  --gdim:rgba(0,255,65,0.08);
+  --text:#dff5e3;
+  --sub:#7aaa84;
+  --muted:#3d6645;
+  --r:16px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  text-rendering:optimizeLegibility;
+}
+
+#bgc{position:fixed;inset:0;z-index:0;}
+.orb{position:fixed;border-radius:50%;pointer-events:none;z-index:0;filter:blur(100px);}
+.orb1{width:600px;height:600px;background:radial-gradient(circle,rgba(0,255,65,.1),transparent 70%);top:-150px;right:-150px;}
+.orb2{width:450px;height:450px;background:radial-gradient(circle,rgba(0,180,40,.07),transparent 70%);bottom:5%;left:-100px;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.1rem 3rem;background:rgba(5,14,6,.85);backdrop-filter:blur(24px);border-bottom:1px solid rgba(0,255,65,.09);}
+.logo{display:flex;align-items:center;gap:.75rem;text-decoration:none;}
+.logo img{height:40px;filter:drop-shadow(0 0 10px rgba(0,255,65,.4));}
+.logo-t{font-family:'Syne',sans-serif;font-weight:800;font-size:1.15rem;color:var(--text);letter-spacing:-.01em;}
+.logo-s{display:block;font-size:.5rem;letter-spacing:.35em;text-transform:uppercase;color:var(--muted);margin-top:2px;}
+nav ul{display:flex;gap:2.2rem;list-style:none;}
+nav ul a{color:var(--sub);text-decoration:none;font-size:.84rem;font-weight:400;letter-spacing:.01em;transition:color .2s;}
+nav ul a:hover{color:var(--g);}
+.nav-cta{background:var(--g);color:#030a03;padding:.56rem 1.5rem;border-radius:100px;font-size:.82rem;font-weight:600;text-decoration:none;box-shadow:0 0 24px rgba(0,255,65,.28);transition:box-shadow .2s,opacity .2s;}
+.nav-cta:hover{opacity:.87;box-shadow:0 0 44px rgba(0,255,65,.48);}
+
+section,div.ticker-wrap,div.stats-row{position:relative;z-index:2;}
+.inner{max-width:1160px;margin:0 auto;padding:0 3rem;}
+
+.pill{display:inline-flex;align-items:center;gap:.55rem;background:rgba(0,255,65,.06);border:1px solid rgba(0,255,65,.22);border-radius:100px;padding:.32rem 1rem;font-size:.7rem;font-weight:500;color:var(--g2);letter-spacing:.06em;}
+.pill::before{content:'';width:6px;height:6px;background:var(--g);border-radius:50%;box-shadow:0 0 6px var(--g);flex-shrink:0;}
+
+.gc{background:var(--card);border:1px solid var(--card-b);border-radius:var(--r);backdrop-filter:blur(6px);transition:background .3s,border-color .3s,transform .3s,box-shadow .3s;}
+.gc:hover{background:var(--card-h);border-color:rgba(0,255,65,.24);transform:translateY(-3px);box-shadow:0 16px 48px rgba(0,255,65,.07);}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:9rem 3rem 3rem;max-width:1160px;margin:0 auto;}
+.hero-pill{margin-bottom:2.2rem;opacity:0;animation:up .5s .1s forwards;}
+h1{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(3.2rem,6.5vw,6rem);
+  font-weight:800;
+  line-height:1.0;
+  letter-spacing:-.025em;
+  margin-bottom:1.8rem;
+  opacity:0;animation:up .7s .2s forwards;
+}
+h1 em{font-style:normal;color:var(--g);text-shadow:0 0 50px rgba(0,255,65,.3);}
+.hero-sub{max-width:500px;font-size:1rem;line-height:1.8;color:var(--sub);font-weight:300;margin-bottom:2.8rem;opacity:0;animation:up .7s .32s forwards;}
+.hero-btns{display:flex;gap:.9rem;flex-wrap:wrap;margin-bottom:3.5rem;opacity:0;animation:up .7s .44s forwards;}
+.btn-p{background:var(--g);color:#030a03;padding:.88rem 2rem;border-radius:100px;font-size:.88rem;font-weight:600;text-decoration:none;box-shadow:0 0 32px rgba(0,255,65,.28);transition:opacity .2s,transform .2s,box-shadow .2s;}
+.btn-p:hover{opacity:.87;transform:translateY(-2px);box-shadow:0 0 52px rgba(0,255,65,.46);}
+.btn-o{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.14);padding:.88rem 2rem;border-radius:100px;font-size:.88rem;font-weight:500;text-decoration:none;transition:border-color .2s,color .2s;}
+.btn-o:hover{border-color:rgba(0,255,65,.4);color:var(--g);}
+
+.hero-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;opacity:0;animation:up .7s .58s forwards;}
+.hf{padding:1.6rem 1.8rem;}
+.hf-icon{font-size:1.6rem;margin-bottom:.9rem;display:block;}
+.hf-title{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:.4rem;letter-spacing:-.01em;}
+.hf-desc{font-size:.8rem;color:var(--sub);line-height:1.68;}
+
+/* TICKER */
+.ticker-wrap{border-top:1px solid rgba(0,255,65,.09);border-bottom:1px solid rgba(0,255,65,.09);overflow:hidden;background:rgba(0,255,65,.025);padding:.75rem 0;position:relative;z-index:2;}
+.ticker{display:flex;animation:scroll 35s linear infinite;white-space:nowrap;}
+.ticker span{font-size:.75rem;letter-spacing:.14em;color:var(--sub);padding:0 2.5rem;font-weight:400;}
+.ticker span::before{content:'→ ';color:var(--g);font-weight:600;}
+@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem;max-width:1160px;margin:0 auto;padding:4rem 3rem;opacity:0;animation:up .7s .7s forwards;}
+.stt{padding:2rem 1.8rem;}
+.stt-n{
+  font-family:'Syne',sans-serif;
+  font-size:2.6rem;
+  font-weight:800;
+  color:var(--g);
+  text-shadow:0 0 24px rgba(0,255,65,.25);
+  line-height:1.1;
+  margin-bottom:.5rem;
+  letter-spacing:-.02em;
+}
+.stt-l{font-size:.82rem;color:var(--sub);line-height:1.6;font-weight:400;}
+
+/* SERVICES */
+#services{padding:4rem 0;}
+.sec-title{font-family:'Syne',sans-serif;font-size:clamp(2rem,3.5vw,3rem);font-weight:800;letter-spacing:-.025em;line-height:1.06;margin-bottom:.9rem;}
+.sec-sub{font-size:.92rem;color:var(--sub);line-height:1.78;max-width:520px;margin-bottom:2.8rem;font-weight:300;}
+.srv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;}
+.srv{padding:2.4rem;}
+.srv-num{font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:1.4rem;font-weight:500;}
+.srv-icon{width:46px;height:46px;background:rgba(0,255,65,.07);border:1px solid rgba(0,255,65,.18);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.25rem;margin-bottom:1.4rem;}
+.srv-title{font-family:'Syne',sans-serif;font-size:1.12rem;font-weight:700;margin-bottom:.7rem;letter-spacing:-.015em;}
+.srv-desc{font-size:.82rem;line-height:1.85;color:var(--sub);}
+.srv-tag{display:inline-block;background:rgba(0,255,65,.06);border:1px solid rgba(0,255,65,.14);border-radius:100px;padding:.22rem .8rem;font-size:.64rem;color:var(--g2);margin-top:1.2rem;font-weight:500;}
+
+/* HOW */
+#how{padding:5rem 0;border-top:1px solid rgba(0,255,65,.08);}
+.how-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:4.5rem;align-items:start;}
+.steps{display:flex;flex-direction:column;gap:.75rem;margin-top:2rem;}
+.step{display:flex;gap:1.2rem;align-items:flex-start;padding:1.4rem 1.6rem;}
+.step-n{width:38px;height:38px;border-radius:50%;background:rgba(0,255,65,.07);border:1px solid rgba(0,255,65,.22);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:.82rem;font-weight:800;color:var(--g);flex-shrink:0;}
+.step-title{font-family:'Syne',sans-serif;font-size:.98rem;font-weight:700;margin-bottom:.3rem;letter-spacing:-.01em;}
+.step-desc{font-size:.8rem;color:var(--sub);line-height:1.65;}
+
+/* ── POWER BI DASHBOARD ── */
+.dash{padding:0;overflow:hidden;}
+.dash-topbar{background:rgba(0,255,65,.06);border-bottom:1px solid rgba(0,255,65,.12);padding:.75rem 1.4rem;display:flex;align-items:center;justify-content:space-between;}
+.dash-wb{display:flex;align-items:center;gap:.5rem;}
+.dash-wb span{width:10px;height:10px;border-radius:50%;}
+.dash-name{font-family:'Syne',sans-serif;font-size:.75rem;font-weight:700;color:var(--text);letter-spacing:.02em;}
+.dash-tabs{display:flex;gap:0;}
+.dash-tab{font-size:.58rem;padding:.3rem .7rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;border-bottom:2px solid transparent;cursor:default;}
+.dash-tab.active{color:var(--g);border-bottom-color:var(--g);}
+
+.dash-body{padding:1.2rem;}
+
+/* KPI ROW */
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;margin-bottom:1rem;}
+.kpi{background:rgba(0,255,65,.04);border:1px solid rgba(0,255,65,.1);border-radius:10px;padding:.9rem;}
+.kpi-v{font-family:'Syne',sans-serif;font-size:1.35rem;font-weight:800;color:var(--g);line-height:1;margin-bottom:.25rem;letter-spacing:-.02em;}
+.kpi-l{font-size:.56rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;}
+.kpi-d{font-size:.65rem;font-weight:600;margin-top:.3rem;}
+.kpi-d.up{color:#00ff41;} .kpi-d.dn{color:#ff4444;}
+
+/* MAIN CHARTS ROW */
+.charts-row{display:grid;grid-template-columns:1.6fr 1fr;gap:.6rem;margin-bottom:.6rem;}
+.chart-box{background:rgba(0,255,65,.03);border:1px solid rgba(0,255,65,.09);border-radius:10px;padding:1rem;}
+.chart-box-title{font-size:.6rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:.8rem;font-weight:600;}
+
+/* LINE CHART */
+.line-chart{position:relative;height:80px;}
+.line-chart svg{width:100%;height:100%;}
+
+/* DONUT CHART */
+.donut-wrap{display:flex;align-items:center;gap:1rem;}
+.donut-svg{width:70px;height:70px;flex-shrink:0;}
+.donut-legend{display:flex;flex-direction:column;gap:.35rem;}
+.dl-item{display:flex;align-items:center;gap:.4rem;font-size:.58rem;color:var(--sub);}
+.dl-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+
+/* BAR CHART */
+.bar-chart2{display:flex;align-items:flex-end;gap:.35rem;height:70px;}
+.b2{flex:1;border-radius:3px 3px 0 0;animation:gB .8s ease-out both;}
+.b2:nth-child(1){height:52%;background:rgba(0,255,65,.6);animation-delay:.05s;}
+.b2:nth-child(2){height:78%;background:rgba(0,255,65,.75);animation-delay:.1s;}
+.b2:nth-child(3){height:45%;background:rgba(0,255,65,.55);animation-delay:.15s;}
+.b2:nth-child(4){height:92%;background:var(--g);animation-delay:.2s;}
+.b2:nth-child(5){height:63%;background:rgba(0,255,65,.68);animation-delay:.25s;}
+.b2:nth-child(6){height:84%;background:rgba(0,255,65,.8);animation-delay:.3s;}
+.b2:nth-child(7){height:38%;background:rgba(0,255,65,.5);animation-delay:.35s;}
+.b2:nth-child(8){height:71%;background:rgba(0,255,65,.72);animation-delay:.4s;}
+.b2:nth-child(9){height:88%;background:rgba(0,255,65,.85);animation-delay:.45s;}
+@keyframes gB{from{transform:scaleY(0);transform-origin:bottom}to{transform:scaleY(1);transform-origin:bottom}}
+
+/* BOTTOM ROW */
+.bot-row{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;}
+.table-mini{background:rgba(0,255,65,.03);border:1px solid rgba(0,255,65,.09);border-radius:10px;padding:1rem;}
+.tm-title{font-size:.6rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:.7rem;font-weight:600;}
+.tm-row{display:flex;justify-content:space-between;align-items:center;padding:.32rem 0;border-bottom:1px solid rgba(0,255,65,.06);font-size:.62rem;}
+.tm-row:last-child{border-bottom:none;}
+.tm-name{color:var(--sub);}
+.tm-val{color:var(--g);font-family:'Syne',sans-serif;font-weight:700;font-size:.68rem;}
+.tm-bar-wrap{width:50px;height:4px;background:rgba(0,255,65,.1);border-radius:2px;overflow:hidden;}
+.tm-bar{height:100%;background:var(--g);border-radius:2px;}
+
+/* TYPES */
+#types{padding:5rem 0;border-top:1px solid rgba(0,255,65,.08);}
+.types-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem;margin-top:2.5rem;}
+.type{padding:1.9rem;}
+.type-icon{font-size:1.6rem;margin-bottom:.9rem;display:block;}
+.type-title{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:.4rem;letter-spacing:-.01em;}
+.type-q{font-size:.7rem;color:var(--g2);font-weight:600;margin-bottom:.4rem;}
+.type-desc{font-size:.78rem;color:var(--sub);line-height:1.68;}
+
+/* CTA */
+#cta{padding:4rem 0 6rem;}
+.cta-card{padding:4.5rem;text-align:center;position:relative;overflow:hidden;}
+.cta-card::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:250px;background:radial-gradient(ellipse,rgba(0,255,65,.07),transparent 65%);pointer-events:none;}
+.cta-title{font-family:'Syne',sans-serif;font-size:clamp(2.2rem,4vw,3.4rem);font-weight:800;letter-spacing:-.03em;line-height:1.05;margin-bottom:1rem;}
+.cta-title em{font-style:normal;color:var(--g);}
+.cta-sub{font-size:.94rem;color:var(--sub);line-height:1.78;max-width:460px;margin:0 auto 2.8rem;font-weight:300;}
+.cta-btns{display:flex;gap:.9rem;justify-content:center;flex-wrap:wrap;}
+
+/* FOOTER */
+footer{border-top:1px solid rgba(0,255,65,.08);padding:2rem 3rem;display:flex;justify-content:space-between;align-items:center;background:rgba(5,14,6,.9);position:relative;z-index:2;}
+.fl{display:flex;gap:2rem;}
+.fl a,footer p{color:var(--muted);font-size:.76rem;text-decoration:none;transition:color .2s;font-weight:400;}
+.fl a:hover{color:var(--g);}
+
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:900px){
+  nav{padding:1rem 1.5rem;}nav ul{display:none;}
+  .inner,.stats-row,#hero{padding-left:1.5rem;padding-right:1.5rem;}
+  h1{font-size:2.8rem;}
+  .hero-strip,.srv-grid,.types-grid,.kpi-row{grid-template-columns:1fr 1fr;}
+  .stats-row{grid-template-columns:1fr 1fr;padding:3rem 1.5rem;}
+  .how-grid,.charts-row,.bot-row{grid-template-columns:1fr;}
+  footer{flex-direction:column;gap:1rem;text-align:center;padding:1.8rem 1.5rem;}
+}
+</style>
+</head>
+<body>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<canvas id="bgc"></canvas>
+
+<nav>
+  <a href="#" class="logo">
+    <img src="logo.png" alt="Dataseed">
+    <div><span class="logo-t">Dataseed</span><span class="logo-s">Data Driven</span></div>
+  </a>
+  <ul>
+    <li><a href="#services">Servicios</a></li>
+    <li><a href="#how">Cómo funciona</a></li>
+    <li><a href="#types">Analítica</a></li>
+    <li><a href="#cta">Contacto</a></li>
+  </ul>
+  <a href="https://calendly.com/dataseed/30min" target="_blank" class="nav-cta">Reservar diagnóstico</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="pill hero-pill">Inteligencia de Negocios · Chile · LATAM</div>
+  <h1>Convierte tus datos<br>en <em>decisiones</em><br>que importan.</h1>
+  <p class="hero-sub">Organizamos, procesamos y analizamos la información de tu empresa para que decidas con claridad, velocidad y confianza.</p>
+  <div class="hero-btns">
+    <a href="https://calendly.com/dataseed/30min" target="_blank" class="btn-p">Agendar diagnóstico gratis</a>
+    <a href="#services" class="btn-o">Explorar servicios →</a>
+  </div>
+  <div class="hero-strip">
+    <div class="hf gc"><span class="hf-icon">📊</span><div class="hf-title">BI y tableros</div><p class="hf-desc">KPIs ejecutivos y visibilidad real del negocio en tiempo real.</p></div>
+    <div class="hf gc"><span class="hf-icon">🔗</span><div class="hf-title">Integración de datos</div><p class="hf-desc">Fuentes dispersas unificadas en un flujo de información ordenado.</p></div>
+    <div class="hf gc"><span class="hf-icon">🧠</span><div class="hf-title">Analítica avanzada</div><p class="hf-desc">Insights accionables para crecer con eficiencia y menos ruido.</p></div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span>Consultoría BI</span><span>Procesamiento de Datos</span><span>Analítica Predictiva</span><span>Tableros Ejecutivos</span><span>KPI Management</span><span>Machine Learning</span><span>Estudios de Mercado</span><span>Analítica Cognitiva</span><span>Data Pipelines</span><span>Power BI</span><span>Visualización de Datos</span><span>Automatización</span>
+    <span>Consultoría BI</span><span>Procesamiento de Datos</span><span>Analítica Predictiva</span><span>Tableros Ejecutivos</span><span>KPI Management</span><span>Machine Learning</span><span>Estudios de Mercado</span><span>Analítica Cognitiva</span><span>Data Pipelines</span><span>Power BI</span><span>Visualización de Datos</span><span>Automatización</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-row">
+  <div class="stt gc"><div class="stt-n">360°</div><div class="stt-l">Visión integral del negocio y sus principales indicadores.</div></div>
+  <div class="stt gc"><div class="stt-n">BI + IA</div><div class="stt-l">Business Intelligence combinado con analítica inteligente.</div></div>
+  <div class="stt gc"><div class="stt-n">5x</div><div class="stt-l">Mayor velocidad en la toma de decisiones estratégicas.</div></div>
+  <div class="stt gc"><div class="stt-n">LATAM</div><div class="stt-l">Soluciones pensadas para operaciones reales en la región.</div></div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="inner">
+    <div class="pill" style="margin-bottom:1.4rem;">● Servicios</div>
+    <h2 class="sec-title">Todo lo que necesitas<br>para explotar tus datos.</h2>
+    <p class="sec-sub">Desde la extracción hasta los tableros ejecutivos, te acompañamos en toda la cadena analítica.</p>
+    <div class="srv-grid">
+      <div class="srv gc">
+        <div class="srv-num">01 — BI Consulting</div>
+        <div class="srv-icon">📊</div>
+        <div class="srv-title">Consultoría BI</div>
+        <p class="srv-desc">Diseño y desarrollo de proyectos de Business Intelligence a medida. Arquitectura de datos, KPIs estratégicos y tableros ejecutivos para decidir con información real.</p>
+        <span class="srv-tag">Tableros · KPIs · Reporting</span>
+      </div>
+      <div class="srv gc">
+        <div class="srv-num">02 — Data Engineering</div>
+        <div class="srv-icon">⚙️</div>
+        <div class="srv-title">Procesamiento de Datos</div>
+        <p class="srv-desc">Extracción y procesamiento masivo de múltiples fuentes heterogéneas. Consolidación, optimización de flujos y preparación de datos para análisis en tiempo real.</p>
+        <span class="srv-tag">ETL · Pipelines · Automatización</span>
+      </div>
+      <div class="srv gc">
+        <div class="srv-num">03 — Advanced Analytics</div>
+        <div class="srv-icon">🔍</div>
+        <div class="srv-title">Analítica Avanzada</div>
+        <p class="srv-desc">Desde analítica descriptiva hasta modelos cognitivos. Visualizaciones interactivas, reportes estadísticos y monitoreo dinámico de los indicadores que más impactan.</p>
+        <span class="srv-tag">Predictiva · Prescriptiva · ML</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW + DASHBOARD -->
+<section id="how">
+  <div class="inner">
+    <div class="how-grid">
+      <div>
+        <div class="pill" style="margin-bottom:1.4rem;">● Cómo trabajamos</div>
+        <h2 class="sec-title">De cero a decisiones<br>en semanas, no meses.</h2>
+        <div class="steps">
+          <div class="step gc"><div class="step-n">01</div><div><div class="step-title">Diagnóstico gratuito</div><p class="step-desc">Entendemos tu negocio, datos actuales y principales cuellos de botella de información.</p></div></div>
+          <div class="step gc"><div class="step-n">02</div><div><div class="step-title">Arquitectura de datos</div><p class="step-desc">Diseñamos la estructura óptima para consolidar y procesar información de múltiples fuentes.</p></div></div>
+          <div class="step gc"><div class="step-n">03</div><div><div class="step-title">Implementación y tableros</div><p class="step-desc">Desarrollamos dashboards y alertas que tu equipo realmente va a usar y entender.</p></div></div>
+          <div class="step gc"><div class="step-n">04</div><div><div class="step-title">Análisis continuo</div><p class="step-desc">Monitoreo, ajuste de KPIs y soporte analítico para acompañarte en el crecimiento.</p></div></div>
+        </div>
+      </div>
+
+      <!-- POWER BI STYLE DASHBOARD -->
+      <div class="gc dash">
+        <div class="dash-topbar">
+          <div class="dash-wb">
+            <span style="background:#ff5f57"></span>
+            <span style="background:#febc2e"></span>
+            <span style="background:#28c840"></span>
+            <span style="width:1px;height:14px;background:rgba(0,255,65,.2);margin:0 .4rem;display:inline-block;"></span>
+            <span class="dash-name">Dashboard Ejecutivo — Dataseed</span>
+          </div>
+          <div style="font-size:.55rem;color:var(--muted);letter-spacing:.1em;">Actualizado: hoy 09:42</div>
+        </div>
+        <div style="padding:.5rem 1rem;background:rgba(0,255,65,.03);border-bottom:1px solid rgba(0,255,65,.08);display:flex;gap:0;">
+          <div class="dash-tab active">Resumen</div>
+          <div class="dash-tab">Ventas</div>
+          <div class="dash-tab">Operaciones</div>
+          <div class="dash-tab">Mercado</div>
+        </div>
+        <div class="dash-body">
+          <!-- KPIs -->
+          <div class="kpi-row">
+            <div class="kpi"><div class="kpi-v">$4.2M</div><div class="kpi-l">Revenue Total</div><div class="kpi-d up">↑ 18.4%</div></div>
+            <div class="kpi"><div class="kpi-v">2,847</div><div class="kpi-l">Clientes Activos</div><div class="kpi-d up">↑ 12.1%</div></div>
+            <div class="kpi"><div class="kpi-v">91.3%</div><div class="kpi-l">Satisfacción</div><div class="kpi-d up">↑ 3.2%</div></div>
+            <div class="kpi"><div class="kpi-v">$1,476</div><div class="kpi-l">Ticket Promedio</div><div class="kpi-d dn">↓ 2.1%</div></div>
+          </div>
+
+          <!-- MAIN CHARTS -->
+          <div class="charts-row">
+            <div class="chart-box">
+              <div class="chart-box-title">Revenue — Últimos 12 meses</div>
+              <div class="line-chart">
+                <svg viewBox="0 0 280 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <linearGradient id="lg" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#00ff41" stop-opacity=".25"/>
+                      <stop offset="100%" stop-color="#00ff41" stop-opacity="0"/>
+                    </linearGradient>
+                  </defs>
+                  <path d="M0,62 L23,55 L46,48 L70,52 L93,40 L116,35 L140,28 L163,32 L186,22 L210,18 L233,12 L256,8 L280,5 L280,80 L0,80 Z" fill="url(#lg)"/>
+                  <path d="M0,62 L23,55 L46,48 L70,52 L93,40 L116,35 L140,28 L163,32 L186,22 L210,18 L233,12 L256,8 L280,5" fill="none" stroke="#00ff41" stroke-width="1.8" stroke-linejoin="round"/>
+                  <!-- dots -->
+                  <circle cx="280" cy="5" r="3" fill="#00ff41" opacity="1"/>
+                  <circle cx="210" cy="18" r="2.5" fill="#00ff41" opacity=".8"/>
+                  <circle cx="140" cy="28" r="2.5" fill="#00ff41" opacity=".8"/>
+                </svg>
+              </div>
+              <div style="display:flex;justify-content:space-between;margin-top:.3rem;">
+                <span style="font-size:.52rem;color:var(--muted);">Ene</span><span style="font-size:.52rem;color:var(--muted);">Mar</span><span style="font-size:.52rem;color:var(--muted);">Jun</span><span style="font-size:.52rem;color:var(--muted);">Sep</span><span style="font-size:.52rem;color:var(--g);font-weight:600;">Dic</span>
+              </div>
+            </div>
+            <div class="chart-box">
+              <div class="chart-box-title">Mix de canales</div>
+              <div class="donut-wrap">
+                <svg class="donut-svg" viewBox="0 0 70 70" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="35" cy="35" r="28" fill="none" stroke="rgba(0,255,65,.08)" stroke-width="10"/>
+                  <circle cx="35" cy="35" r="28" fill="none" stroke="#00ff41" stroke-width="10" stroke-dasharray="88 88" stroke-dashoffset="22" stroke-linecap="round" transform="rotate(-90 35 35)"/>
+                  <circle cx="35" cy="35" r="28" fill="none" stroke="rgba(0,255,65,.35)" stroke-width="10" stroke-dasharray="44 132" stroke-dashoffset="-66" stroke-linecap="round" transform="rotate(-90 35 35)"/>
+                  <circle cx="35" cy="35" r="28" fill="none" stroke="rgba(0,255,65,.18)" stroke-width="10" stroke-dasharray="24 152" stroke-dashoffset="-110" stroke-linecap="round" transform="rotate(-90 35 35)"/>
+                  <text x="35" y="38" text-anchor="middle" font-size="9" fill="#00ff41" font-family="Syne,sans-serif" font-weight="800">50%</text>
+                </svg>
+                <div class="donut-legend">
+                  <div class="dl-item"><span class="dl-dot" style="background:#00ff41"></span>Digital — 50%</div>
+                  <div class="dl-item"><span class="dl-dot" style="background:rgba(0,255,65,.35)"></span>Directo — 25%</div>
+                  <div class="dl-item"><span class="dl-dot" style="background:rgba(0,255,65,.18)"></span>Partners — 14%</div>
+                  <div class="dl-item"><span class="dl-dot" style="background:rgba(0,255,65,.08)"></span>Otros — 11%</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- BOTTOM ROW -->
+          <div class="bot-row">
+            <div class="chart-box">
+              <div class="chart-box-title">Unidades vendidas por mes</div>
+              <div class="bar-chart2">
+                <div class="b2"></div><div class="b2"></div><div class="b2"></div><div class="b2"></div>
+                <div class="b2"></div><div class="b2"></div><div class="b2"></div><div class="b2"></div><div class="b2"></div>
+              </div>
+            </div>
+            <div class="table-mini">
+              <div class="tm-title">Top productos</div>
+              <div class="tm-row"><span class="tm-name">Dashboard Pro</span><div class="tm-bar-wrap"><div class="tm-bar" style="width:92%"></div></div><span class="tm-val">$1.8M</span></div>
+              <div class="tm-row"><span class="tm-name">Analytics Suite</span><div class="tm-bar-wrap"><div class="tm-bar" style="width:68%"></div></div><span class="tm-val">$1.2M</span></div>
+              <div class="tm-row"><span class="tm-name">BI Consultoría</span><div class="tm-bar-wrap"><div class="tm-bar" style="width:54%"></div></div><span class="tm-val">$780K</span></div>
+              <div class="tm-row"><span class="tm-name">Data Pipeline</span><div class="tm-bar-wrap"><div class="tm-bar" style="width:38%"></div></div><span class="tm-val">$420K</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TYPES -->
+<section id="types">
+  <div class="inner">
+    <div class="pill" style="margin-bottom:1.4rem;">● Tipos de analítica</div>
+    <h2 class="sec-title">Toda la cadena analítica,<br>en un solo partner.</h2>
+    <div class="types-grid">
+      <div class="type gc"><span class="type-icon">📋</span><div class="type-q">¿Qué pasó?</div><div class="type-title">Descriptiva</div><p class="type-desc">Resúmenes claros de datos históricos y KPIs clave para entender el estado actual.</p></div>
+      <div class="type gc"><span class="type-icon">🔎</span><div class="type-q">¿Por qué pasó?</div><div class="type-title">Diagnóstica</div><p class="type-desc">Identificamos causas raíz y patrones ocultos en tus datos para actuar sobre lo correcto.</p></div>
+      <div class="type gc"><span class="type-icon">📈</span><div class="type-q">¿Qué va a pasar?</div><div class="type-title">Predictiva</div><p class="type-desc">Modelos estadísticos y de ML que anticipan tendencias, riesgos y oportunidades.</p></div>
+      <div class="type gc"><span class="type-icon">🎯</span><div class="type-q">¿Qué hacer?</div><div class="type-title">Prescriptiva</div><p class="type-desc">Recomendaciones accionables y simulaciones para optimizar decisiones antes de ejecutarlas.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="inner">
+    <div class="cta-card gc">
+      <div class="pill" style="margin:0 auto 1.6rem;display:flex;width:fit-content;">● Hablemos</div>
+      <h2 class="cta-title">Entendemos tu negocio<br>antes de proponer <em>nada.</em></h2>
+      <p class="cta-sub">En 30 minutos analizamos tu situación actual y te compartimos recomendaciones concretas. Sin compromiso, con foco en resultados reales y medibles.</p>
+      <div class="cta-btns">
+        <a href="https://calendly.com/dataseed/30min" target="_blank" class="btn-p">Reservar sesión gratis →</a>
+        <a href="mailto:contacto@dataseed.cl" class="btn-o">contacto@dataseed.cl</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <a href="#" class="logo">
+    <img src="logo.png" alt="Dataseed" style="height:32px;filter:drop-shadow(0 0 8px rgba(0,255,65,.35));">
+    <div><span class="logo-t" style="font-size:.95rem;">Dataseed</span><span class="logo-s">data driven</span></div>
+  </a>
+  <div class="fl">
+    <a href="mailto:contacto@dataseed.cl">contacto@dataseed.cl</a>
+    <a href="tel:+56992354255">+56 9 9235 4255</a>
+  </div>
+  <p>©2024 Dataseed · Santiago, Chile</p>
+</footer>
+
+<script>
+const cv=document.getElementById('bgc'),cx=cv.getContext('2d');
+function rs(){cv.width=window.innerWidth;cv.height=window.innerHeight;}
+rs();window.addEventListener('resize',rs);
+const C=26,R=15,pts=[];
+for(let i=0;i<=C;i++)for(let j=0;j<=R;j++)pts.push({x:i/C,y:j/R,ph:Math.random()*Math.PI*2,sp:.4+Math.random()*.6});
+let t=0;
+function draw(){
+  cx.clearRect(0,0,cv.width,cv.height);
+  const W=cv.width,H=cv.height;
+  cx.strokeStyle='rgba(0,255,65,.042)';cx.lineWidth=.5;
+  for(let i=0;i<=C;i++){cx.beginPath();cx.moveTo(i/C*W,0);cx.lineTo(i/C*W,H);cx.stroke();}
+  for(let j=0;j<=R;j++){cx.beginPath();cx.moveTo(0,j/R*H);cx.lineTo(W,j/R*H);cx.stroke();}
+  pts.forEach(p=>{
+    const pulse=Math.sin(t*p.sp+p.ph);
+    cx.beginPath();cx.arc(p.x*W,p.y*H,.9+pulse*.45,0,Math.PI*2);
+    cx.fillStyle=`rgba(0,255,65,${.03+.08*(.5+.5*pulse)})`;cx.fill();
+  });
+  const sy=(t*.016%1)*H;
+  const g=cx.createLinearGradient(0,sy-70,0,sy+70);
+  g.addColorStop(0,'transparent');g.addColorStop(.5,'rgba(0,255,65,0.018)');g.addColorStop(1,'transparent');
+  cx.fillStyle=g;cx.fillRect(0,sy-70,W,140);
+  t+=1/60;requestAnimationFrame(draw);
+}
+draw();
+</script>
+</body>
+</html>
