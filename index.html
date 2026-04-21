@@ -87,6 +87,7 @@ h1 em{font-style:normal;color:var(--g);text-shadow:0 0 50px rgba(0,255,65,.3);}
 
 /* TICKER */
 .ticker-wrap{border-top:1px solid rgba(0,255,65,.09);border-bottom:1px solid rgba(0,255,65,.09);overflow:hidden;background:rgba(0,255,65,.025);padding:.75rem 0;position:relative;z-index:2;}
+#hero .ticker-wrap{width:100vw;margin:0 calc(50% - 50vw) 2rem;}
 .ticker{display:flex;animation:scroll 35s linear infinite;white-space:nowrap;}
 .ticker span{font-size:.75rem;letter-spacing:.14em;color:var(--sub);padding:0 2.5rem;font-weight:400;}
 .ticker span::before{content:'→ ';color:var(--g);font-weight:600;}
@@ -247,6 +248,12 @@ footer{border-top:1px solid rgba(0,255,65,.08);padding:2rem 3rem;display:flex;ju
 
 <!-- HERO -->
 <section id="hero">
+  <div class="ticker-wrap">
+    <div class="ticker">
+      <span>Consultoría BI</span><span>Procesamiento de Datos</span><span>Analítica Predictiva</span><span>Tableros Ejecutivos</span><span>KPI Management</span><span>Machine Learning</span><span>Estudios de Mercado</span><span>Analítica Cognitiva</span><span>Data Pipelines</span><span>Power BI</span><span>Visualización de Datos</span><span>Automatización</span>
+      <span>Consultoría BI</span><span>Procesamiento de Datos</span><span>Analítica Predictiva</span><span>Tableros Ejecutivos</span><span>KPI Management</span><span>Machine Learning</span><span>Estudios de Mercado</span><span>Analítica Cognitiva</span><span>Data Pipelines</span><span>Power BI</span><span>Visualización de Datos</span><span>Automatización</span>
+    </div>
+  </div>
   <div class="pill hero-pill">Inteligencia de Negocios · Chile · LATAM</div>
   <h1>Convierte tus datos<br>en <em>decisiones</em><br>que importan.</h1>
   <p class="hero-sub">Organizamos, procesamos y analizamos la información de tu empresa para que decidas con claridad, velocidad y confianza.</p>
@@ -259,14 +266,6 @@ footer{border-top:1px solid rgba(0,255,65,.08);padding:2rem 3rem;display:flex;ju
     <div class="hf gc"><span class="hf-icon">🧠</span><div class="hf-title">Analítica avanzada</div><p class="hf-desc">Insights accionables para crecer con eficiencia y menos ruido.</p></div>
   </div>
 </section>
-
-<!-- TICKER -->
-<div class="ticker-wrap">
-  <div class="ticker">
-    <span>Consultoría BI</span><span>Procesamiento de Datos</span><span>Analítica Predictiva</span><span>Tableros Ejecutivos</span><span>KPI Management</span><span>Machine Learning</span><span>Estudios de Mercado</span><span>Analítica Cognitiva</span><span>Data Pipelines</span><span>Power BI</span><span>Visualización de Datos</span><span>Automatización</span>
-    <span>Consultoría BI</span><span>Procesamiento de Datos</span><span>Analítica Predictiva</span><span>Tableros Ejecutivos</span><span>KPI Management</span><span>Machine Learning</span><span>Estudios de Mercado</span><span>Analítica Cognitiva</span><span>Data Pipelines</span><span>Power BI</span><span>Visualización de Datos</span><span>Automatización</span>
-  </div>
-</div>
 
 <!-- STATS -->
 <div class="stats-row">
